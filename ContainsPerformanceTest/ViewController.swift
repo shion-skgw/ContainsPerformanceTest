@@ -15,29 +15,30 @@ class ViewController: UIViewController {
     /// 記号のArray
     let array: [Character] = ViewController.asciiSymboles.map({ $0 })
     /// Arrayでcontainsするケース
-    func containsOfArray(_ text: String) -> Bool {
-        return text.contains(where: { array.contains($0) })
+    func containsOfArray(_ target: String) -> Bool {
+        return target.contains(where: { array.contains($0) })
     }
 
     /// 記号のSet
     let set: Set<Character> = Set(ViewController.asciiSymboles.map({ $0 }))
     /// Setでcontainsするケース
-    func containsOfSet(_ text: String) -> Bool {
-        return text.contains(where: { set.contains($0) })
+    func containsOfSet(_ target: String) -> Bool {
+        return target.contains(where: { set.contains($0) })
     }
 
     /// 記号のCharacterSet
     let characterSet: CharacterSet = CharacterSet(charactersIn: ViewController.asciiSymboles)
     /// CharacterSetでcontainsするケース
-    func containsOfCharacterSet(_ text: String) -> Bool {
-        return text.unicodeScalars.contains(where: { characterSet.contains($0) })
+    func containsOfCharacterSet(_ target: String) -> Bool {
+        return target.unicodeScalars.contains(where: { characterSet.contains($0) })
     }
 
     /// 許容文字だけチェック正規表現
     let regularExpression: NSRegularExpression = try! NSRegularExpression(pattern: "[^0-9a-zA-Z]")
     /// firstMatchの有無チェックするケース
-    func containsOfRegularExpression(_ text: String, _ range: NSRange) -> Bool {
-        return regularExpression.firstMatch(in: text, range: range) != nil
+    func containsOfRegularExpression(_ target: String) -> Bool {
+        let range = NSMakeRange(.zero, target.utf16.count)
+        return regularExpression.firstMatch(in: target, range: range) != nil
     }
 
     /// 禁則文字1文字だけ
@@ -129,20 +130,19 @@ class ViewController: UIViewController {
          */
         print()
         print("containsOfRegularExpression")
-        var nsRange = NSMakeRange(.zero, test1.utf16.count)
         start = Date()
         for _ in 1...100000 {
-            _ = containsOfRegularExpression(test1, nsRange)
+            _ = containsOfRegularExpression(test1)
         }
         print(Date().timeIntervalSince(start))
         start = Date()
         for _ in 1...100000 {
-            _ = containsOfRegularExpression(test1, nsRange)
+            _ = containsOfRegularExpression(test1)
         }
         print(Date().timeIntervalSince(start))
         start = Date()
         for _ in 1...100000 {
-            _ = containsOfRegularExpression(test1, nsRange)
+            _ = containsOfRegularExpression(test1)
         }
         print(Date().timeIntervalSince(start))
 
@@ -228,20 +228,19 @@ class ViewController: UIViewController {
          */
         print()
         print("containsOfRegularExpression")
-        nsRange = NSMakeRange(.zero, test2.utf16.count)
         start = Date()
         for _ in 1...100000 {
-            _ = containsOfRegularExpression(test2, nsRange)
+            _ = containsOfRegularExpression(test2)
         }
         print(Date().timeIntervalSince(start))
         start = Date()
         for _ in 1...100000 {
-            _ = containsOfRegularExpression(test2, nsRange)
+            _ = containsOfRegularExpression(test2)
         }
         print(Date().timeIntervalSince(start))
         start = Date()
         for _ in 1...100000 {
-            _ = containsOfRegularExpression(test2, nsRange)
+            _ = containsOfRegularExpression(test2)
         }
         print(Date().timeIntervalSince(start))
     }
